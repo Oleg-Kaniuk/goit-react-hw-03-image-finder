@@ -77,9 +77,8 @@ export class App extends Component {
     const form = evt.currentTarget;
     const searchImage = form.search.value
       .trim()
-      .toLowerCase()
-      .split(' ')
-      .join('+');;
+      .toLowerCase();
+      
     
     if (searchImage === '') {
       Notify.info('Enter your request, please!', styleNotify);
