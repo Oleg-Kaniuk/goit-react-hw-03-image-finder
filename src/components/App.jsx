@@ -67,7 +67,7 @@ export class App extends Component {
     };
 
   render() {
-    const { photos, isLoading, btnLoadMore, openModal, selectedPhoto } = this.state;
+    // const { photos, isLoading, btnLoadMore, openModal, selectedPhoto } = this.state;
     
     return (
       <div>
