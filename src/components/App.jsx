@@ -2,12 +2,13 @@ import { Component } from "react";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { fetchPhoto, fetchError } from "./api/api";
-import { AppContainer } from "./App.styled";
+import { AppContainer, Title, Container } from "./App.styled";
 
 import { Searchbar } from "./Searchbar/Searchbar";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Button } from "./Button/Button";
 import { Loader } from "./Loader/Loader";
+import { Modal } from "./Modal/Modal";
 
 const perPage = 12;
 
@@ -119,18 +120,19 @@ export class App extends Component {
   }
 
   render() {
-    const { photos, btnLoadMore, isLoading } = this.state;
+    const { photos, btnLoadMore, isLoading, showModal, selectedPhoto } = this.state;
     
     return (
-      <div>
-        <h1>Image finder</h1>
+      <Container>
+        <Title>Image finder</Title>
         <Searchbar onSubmitSearch={this.onSubmitSearch} />
-         {isLoading && <Loader />}
+        {isLoading && <Loader />}
         <AppContainer>
           <ImageGallery photos={photos} onClickImage={this.onClickOpenModal} />;
         </AppContainer>
         {photos.length !== 0 && btnLoadMore && <Button onClickReloading={this.onClickReloading} />}
-      </div>
+        {showModal && <Modal selectedPhoto={selectedPhoto} onClose={this.toggleModal} />}
+      </Container>
     );
   }
 };
