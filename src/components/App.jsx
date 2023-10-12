@@ -7,6 +7,7 @@ import { AppContainer } from "./App.styled";
 import { Searchbar } from "./Searchbar/Searchbar";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Button } from "./Button/Button";
+import { Loader } from "./Loader/Loader";
 
 const perPage = 12;
 
@@ -118,12 +119,13 @@ export class App extends Component {
   }
 
   render() {
-    const { photos, btnLoadMore } = this.state;
+    const { photos, btnLoadMore, isLoading } = this.state;
     
     return (
       <div>
         <h1>Image finder</h1>
         <Searchbar onSubmitSearch={this.onSubmitSearch} />
+         {isLoading && <Loader />}
         <AppContainer>
           <ImageGallery photos={photos} onClickImage={this.onClickOpenModal} />;
         </AppContainer>
