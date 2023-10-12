@@ -5,6 +5,7 @@ import { fetchPhoto, fetchError } from "./api/api";
 import { AppContainer } from "./App.styled";
 
 import { Searchbar } from "./Searchbar/Searchbar";
+import { ImageGallery } from "./ImageGallery/ImageGallery";
 
 const perPage = 12;
 
@@ -22,7 +23,7 @@ export class App extends Component {
     photos: [],
     isLoading: false,
     btnLoadMore: false,
-    openModal: false,
+    showModal: false,
     selectedPhoto: null,
   }
 
@@ -94,15 +95,30 @@ export class App extends Component {
     });
   }
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal
+    }));
+  }
+
+  onClickOpenModal = (evt) => {
+    const { photos } = this.state;
+    const idImage = evt.target.getAttribute('data-id');
+    const selectedPhoto = photos.find(photo =>
+      photo.id === Number(idImage));
+    this.setState({ selectedPhoto });
+    this.toggleModal();
+  }
+
   render() {
-    // const { photos, isLoading, btnLoadMore, openModal, selectedPhoto } = this.state;
+    const { photos } = this.state;
     
     return (
       <div>
         <h1>Image finder</h1>
          <Searchbar onSubmitSearch={this.onSubmitSearch} />
         <AppContainer>
-        
+          <ImageGallery photos={photos} onClickImage={this.onClickOpenModal} />;
         </AppContainer>
       </div>
     );
