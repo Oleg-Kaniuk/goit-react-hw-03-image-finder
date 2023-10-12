@@ -6,6 +6,7 @@ import { AppContainer } from "./App.styled";
 
 import { Searchbar } from "./Searchbar/Searchbar";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
+import { Button } from "./Button/Button";
 
 const perPage = 12;
 
@@ -110,16 +111,23 @@ export class App extends Component {
     this.toggleModal();
   }
 
+  onClickReloading = () => {
+    this.setState(({ page }) => ({
+      page: page + 1
+    }));
+  }
+
   render() {
-    const { photos } = this.state;
+    const { photos, btnLoadMore } = this.state;
     
     return (
       <div>
         <h1>Image finder</h1>
-         <Searchbar onSubmitSearch={this.onSubmitSearch} />
+        <Searchbar onSubmitSearch={this.onSubmitSearch} />
         <AppContainer>
           <ImageGallery photos={photos} onClickImage={this.onClickOpenModal} />;
         </AppContainer>
+        {photos.length !== 0 && btnLoadMore && <Button onClickReloading={this.onClickReloading} />}
       </div>
     );
   }
