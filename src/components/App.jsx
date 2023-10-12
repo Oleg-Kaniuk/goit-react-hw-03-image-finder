@@ -4,6 +4,8 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { fetchPhoto, fetchError } from "./api/api";
 import { AppContainer } from "./App.styled";
 
+import { Searchbar } from "./Searchbar/Searchbar";
+
 const perPage = 12;
 
 export const styleNotify = {
@@ -64,7 +66,33 @@ export class App extends Component {
       .finally(() => {
         this.setState({ isLoading: false });
       });
+  };
+  
+  onSubmitSearch = (evt) => {
+    evt.preventDefault();
+    const form = evt.currentTarget;
+    const searchImage = form.search.value
+      .trim()
+      .toLowerCase()
+      .split(' ')
+      .join('+');;
+    
+    if (searchImage === '') {
+      Notify.info('Enter your request, please!', styleNotify);
+      return;
     };
+
+    if (searchImage === this.state.search) {
+      Notify.info('Enter new request, please!', styleNotify);
+      return;
+    };
+
+    this.setState({
+      search: searchImage,
+      page: 1,
+      photos: [],
+    });
+  }
 
   render() {
     // const { photos, isLoading, btnLoadMore, openModal, selectedPhoto } = this.state;
@@ -72,6 +100,7 @@ export class App extends Component {
     return (
       <div>
         <h1>Image finder</h1>
+         <Searchbar onSubmitSearch={this.onSubmitSearch} />
         <AppContainer>
         
         </AppContainer>
